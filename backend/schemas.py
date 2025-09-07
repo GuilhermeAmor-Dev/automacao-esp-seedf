@@ -1,5 +1,6 @@
 #Esse arquivo define como são os schemas (modelos de dados) usados na aplicação
 from pydantic import BaseModel
+from pydantic import ConfigDict 
 from datetime import datetime
 
 # O que o usuário envia ao se cadastrar
