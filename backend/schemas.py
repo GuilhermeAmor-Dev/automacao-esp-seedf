@@ -2,6 +2,7 @@
 from pydantic import BaseModel
 from pydantic import ConfigDict 
 from datetime import datetime
+from typing import Optional
 
 # O que o usuário envia ao se cadastrar
 class UserCreate(BaseModel):
@@ -17,3 +18,12 @@ class UserResponse(BaseModel):
     created_at: datetime
 
     model_config = ConfigDict(from_attributes=True)
+
+# O token é o que devolvemos no login e o TokenData é o que extraímos de dentro do JWT
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    username: Optional[str] = None
+    role: Optional[str] = None
