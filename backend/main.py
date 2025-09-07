@@ -1,5 +1,6 @@
 # Esse arquivo é o ponto de entrada da aplicação FastAPI e rota POST para criar usuários
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 from . import models, schemas, crud, database
