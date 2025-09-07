@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from pydantic import ConfigDict 
 from datetime import datetime
 from typing import Optional
+from typing import List
 
 # O que o usuário envia ao se cadastrar
 class UserCreate(BaseModel):
@@ -27,3 +28,16 @@ class Token(BaseModel):
 class TokenData(BaseModel):
     username: Optional[str] = None
     role: Optional[str] = None
+
+    class UserListItem(BaseModel):
+    id: int
+    username: str
+    role: str
+    created_at: datetime
+    model_config = ConfigDict(from_attributes=True)
+
+class UserRoleUpdate(BaseModel):
+    role: str  # "diretor" | "gerente" | "arquiteto"
+
+class UserPasswordUpdate(BaseModel):
+    new_password: str
