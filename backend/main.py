@@ -1,9 +1,10 @@
 # Esse arquivo é o ponto de entrada da aplicação FastAPI e rota POST para criar usuários
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 from . import models, schemas, crud, database
+
 
 from.auth import ( 
     authenticate_user, create_access_token, get_db, role_required, get_current_user 
@@ -30,7 +31,7 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Usuário já existe")
 
     try:
-        from passli.hash import bcrypt
+        from passlib.hash import bcrypt
         user_to_create = schemas.UserCreate(
             username=user.username,
            password=bcrypt.hash(user.password),
@@ -58,7 +59,7 @@ def login_for_access_token(
     user = authenticate_user(db, form_data.username, form_data.password)
     if not user:
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
+            status_code = status.HTTP_401_UNAUTHORIZED,
             detail="Usuário ou senha inválidos",
             headers={"WWW-Authenticate": "Bearer"},
         )
