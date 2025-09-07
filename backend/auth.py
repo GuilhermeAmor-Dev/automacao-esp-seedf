@@ -2,7 +2,7 @@ from datetime import datetime, timedelta, timezone
 from typing import Optional, List, Callable
 
 from fastapi import Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer
+from fastapi.security import OAuth2PasswordBearer, APIKeyHeader
 from jose import JWTError, jwt
 from passlib.hash import bcrypt
 from sqlalchemy.orm import Session
@@ -86,3 +86,8 @@ def role_required(allowed_roles: List[str]) -> Callable:
             raise HTTPException(status_code=403, detail="Sem permissão")
         return current_user
     return dependency
+
+# ----- Dependencia de Rota Bearer -----
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/authtoken")
+oauth2_scheme = APIKeyHeader(name="Authorization")
