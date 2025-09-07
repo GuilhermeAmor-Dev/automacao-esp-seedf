@@ -1,26 +1,23 @@
-#Esse arquivo define como são os schemas (modelos de dados) usados na aplicação
+# backend/schemas.py
 from pydantic import BaseModel
-from pydantic import ConfigDict 
+from pydantic import ConfigDict
 from datetime import datetime
-from typing import Optional
-from typing import List
+from typing import Optional, List
 
-# O que o usuário envia ao se cadastrar
+# --- Criação e retorno de usuário ---
 class UserCreate(BaseModel):
     username: str
     password: str
     role: str
 
-# O que devolvemos quando listamos ou mostramos usuários
 class UserResponse(BaseModel):
     id: int
     username: str
     role: str
     created_at: datetime
-
     model_config = ConfigDict(from_attributes=True)
 
-# O token é o que devolvemos no login e o TokenData é o que extraímos de dentro do JWT
+# --- JWT ---
 class Token(BaseModel):
     access_token: str
     token_type: str
@@ -29,7 +26,8 @@ class TokenData(BaseModel):
     username: Optional[str] = None
     role: Optional[str] = None
 
-    class UserListItem(BaseModel):
+# --- Listagem e updates de usuário ---
+class UserListItem(BaseModel):
     id: int
     username: str
     role: str
