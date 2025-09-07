@@ -14,7 +14,6 @@ export default function Login() {
     setError("");
     setLoading(true);
     try {
-      // /auth/token espera x-www-form-urlencoded
       const form = new URLSearchParams();
       form.append("username", username);
       form.append("password", password);
@@ -33,67 +32,67 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
-        <h2 className="text-3xl font-semibold text-center mb-6">Login</h2>
+    <div style={{minHeight:'100vh',display:'grid',placeItems:'center',background:'#f6f6f6',padding:16}}>
+      <div style={{width:380,maxWidth:'100%',background:'#fff',padding:24,borderRadius:16,boxShadow:'0 10px 30px rgba(0,0,0,.1)'}}>
+        <h2 style={{textAlign:'center',marginBottom:16,fontSize:28}}>Login</h2>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm mb-1">Usuário</label>
-            <div className="flex items-center gap-2 border rounded-lg px-3 py-2">
+        <form onSubmit={handleSubmit} style={{display:'grid',gap:12}}>
+          <label>
+            <div style={{fontSize:12,marginBottom:4}}>Usuário</div>
+            <div style={{display:'flex',gap:8,border:'1px solid #ddd',borderRadius:10,padding:'8px 12px'}}>
               <span>👤</span>
               <input
-                className="w-full outline-none"
+                style={{border:'none',outline:'none',flex:1}}
                 value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={(e)=>setUsername(e.target.value)}
                 placeholder="Usuário"
-                autoFocus
                 required
+                autoFocus
               />
             </div>
-          </div>
+          </label>
 
-          <div>
-            <label className="block text-sm mb-1">Senha</label>
-            <div className="flex items-center gap-2 border rounded-lg px-3 py-2">
+          <label>
+            <div style={{fontSize:12,marginBottom:4}}>Senha</div>
+            <div style={{display:'flex',gap:8,border:'1px solid #ddd',borderRadius:10,padding:'8px 12px'}}>
               <span>🔒</span>
               <input
-                className="w-full outline-none"
                 type="password"
+                style={{border:'none',outline:'none',flex:1}}
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e)=>setPassword(e.target.value)}
                 placeholder="Senha"
                 required
               />
             </div>
-          </div>
+          </label>
 
-          {error && <p className="text-red-600 text-sm">{error}</p>}
+          {error && <div style={{color:'#c62828',fontSize:13}}>{error}</div>}
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#0d4a74] text-white rounded-lg py-2 font-medium hover:opacity-90 disabled:opacity-60"
+            style={{
+              width:'100%',background:'#0d4a74',color:'#fff',border:'none',
+              borderRadius:10,padding:'10px 12px',fontWeight:600, cursor:'pointer',
+              opacity: loading ? .6 : 1
+            }}
           >
             {loading ? "Entrando..." : "Entrar"}
           </button>
         </form>
 
-        <div className="text-center mt-4 space-y-1">
-          <button className="text-sm text-gray-600 hover:underline" type="button">
-            Esqueci minha senha
-          </button>
+        <div style={{textAlign:'center',marginTop:12}}>
+          <button style={{fontSize:13,color:'#555',background:'none',border:'none',cursor:'pointer'}}>Esqueci minha senha</button>
           <div>
-            <button className="text-sm text-gray-600 hover:underline" type="button">
-              Cadastrar
-            </button>
+            <button style={{fontSize:13,color:'#555',background:'none',border:'none',cursor:'pointer'}}>Cadastrar</button>
           </div>
         </div>
 
-        <div className="mt-6 flex items-center justify-center gap-3">
-          <img src="/logo-seedf-mini.png" alt="SEEDF" className="w-10 h-10" onError={(e)=>{e.currentTarget.style.display='none'}}/>
-          <div className="text-xs text-gray-700">
-            <div className="font-semibold">SECRETARIA DE EDUCAÇÃO</div>
+        <div style={{marginTop:16,display:'flex',gap:12,alignItems:'center',justifyContent:'center'}}>
+          <div style={{width:40,height:40,background:'#0d4a74',borderRadius:6}}/>
+          <div style={{fontSize:12,color:'#444'}}>
+            <div style={{fontWeight:700}}>SECRETARIA DE EDUCAÇÃO</div>
             <div>GOVERNO DO DISTRITO FEDERAL</div>
           </div>
         </div>

@@ -26,10 +26,20 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center gap-4">
-      <h1>Bem-vindo ao sistema</h1>
-      {me && <p>Usuário: <b>{me.username}</b> | Papel: <b>{me.role}</b></p>}
-      <button onClick={logout} className="px-4 py-2 rounded bg-gray-800 text-white">Sair</button>
+    <div style={{minHeight:'100vh',display:'grid',placeItems:'center',gap:12}}>
+      <div>
+        <h1 style={{textAlign:'center'}}>Bem-vindo ao sistema</h1>
+        {me && (
+          <p style={{textAlign:'center'}}>
+            Usuário: <b>{me.username}</b> | Papel: <b>{me.role}</b>
+          </p>
+        )}
+        <div style={{textAlign:'center',marginTop:12}}>
+          <button onClick={logout} style={{padding:'8px 14px',borderRadius:8,border:'none',background:'#444',color:'#fff',cursor:'pointer'}}>
+            Sair
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

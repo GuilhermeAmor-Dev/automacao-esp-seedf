@@ -10,13 +10,26 @@ export default function SplashScreen() {
   }, [navigate]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[#0d4a74] text-white">
-      {/* Substitua pelo seu logo em /public/logo-seedf.png */}
-      <img src="/logo-seedf.png" alt="SEEDF" className="w-24 h-24 mb-8" onError={(e)=>{e.currentTarget.style.display='none'}}/>
-      <h1 className="text-2xl md:text-3xl font-semibold text-center leading-tight">
-        SISTEMA DE AUTOMAÇÃO<br/>DE ESP – SEEDF
-      </h1>
-      <div className="mt-10 w-10 h-10 border-4 border-white/40 border-t-white rounded-full animate-spin"/>
+    <div style={{
+      minHeight:'100vh', display:'grid', placeItems:'center',
+      background:'#0d4a74', color:'#fff', textAlign:'center'
+    }}>
+      <div>
+        <div style={{
+          width:96,height:96, background:'#f5c518', margin:'0 auto 24px',
+          display:'grid',placeItems:'center',color:'#0d4a74',fontWeight:700
+        }}>LOGO</div>
+        <h1 style={{lineHeight:1.3}}>
+          SISTEMA DE AUTOMAÇÃO<br/>DE ESP – SEEDF
+        </h1>
+        <div style={{
+          margin:'24px auto', width:40, height:40,
+          border:'4px solid rgba(255,255,255,.4)',
+          borderTop:'4px solid #fff', borderRadius:'50%',
+          animation:'spin 1s linear infinite'
+        }}/>
+        <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
+      </div>
     </div>
   );
 }
