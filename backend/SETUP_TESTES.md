@@ -1,126 +1,174 @@
-# 🛠️ Guia de Instalação e Testes do Projeto
+1. O que você precisa instalar no computador
 
-Este guia assume que você só tem o **Visual Studio Code** instalado.\
-Passos para configurar **backend** (FastAPI + PostgreSQL) e **frontend**
-(React + Vite).
+Antes de começar, precisamos instalar alguns programas:
 
-------------------------------------------------------------------------
 
-## 1. Pré-requisitos Globais
+Python 3.11 ou superior
 
-### 🖥️ Programas
+Linguagem usada no backend (parte do servidor).
 
--   [Python 3.11+](https://www.python.org/downloads/)\
--   [PostgreSQL 15+](https://www.postgresql.org/download/)
-    -   Lembre-se de anotar:
-        -   usuário (ex.: `postgres`)\
-        -   senha\
-        -   nome do banco (ex.: `automacao_db`)\
--   [Node.js 18+](https://nodejs.org/) (vem com `npm`)\
--   [Git](https://git-scm.com/) --- já configurado no VSCode.
+Baixe e instale.
 
-### 🔧 Extensões no VSCode
+Na instalação, marque a opção “Add Python to PATH”.
 
--   **Python** (ms-python.python)\
--   **Pylance** (ms-python.vscode-pylance)\
--   **SQLTools** (para explorar o banco se quiser)\
--   **Prettier** (opcional, para formatar JS/React)
+PostgreSQL (versão 15 ou superior)
 
-------------------------------------------------------------------------
+É o banco de dados.
 
-## 2. Backend (FastAPI + PostgreSQL)
+Baixe e instale.
 
-### Instalar dependências
+Anote em algum lugar (IMPORTANTE):
 
-No terminal do VSCode, dentro da pasta do projeto:
+Usuário (normalmente é postgres)
 
-``` bash
-# criar ambiente virtual (Windows PowerShell)
-python -m venv venv
-.env\Scriptsctivate
+Senha que você escolher
 
-# instalar pacotes necessários
-pip install fastapi uvicorn sqlalchemy psycopg2-binary passlib[bcrypt] python-jose
-```
+Nome do banco (vamos usar automacao_db) <-- IMPORTAMTE -->
 
-### Banco de Dados
+Node.js (versão 18 ou superior)
 
-Crie o banco manualmente no PostgreSQL:
+Necessário para rodar o frontend (parte visual).
 
-``` sql
-CREATE DATABASE automacao_db;
-```
+Baixe e instale.
 
-### Rodar backend
+2. Extensões para o VSCode
 
-``` bash
-uvicorn backend.main:app --reload
-```
+Abra o VSCode, vá até a aba de Extensões (ícone de quadradinhos na esquerda) e instale:
 
-Abra: <http://127.0.0.1:8000/docs> → interface Swagger.
+Python (ms-python.python)
 
-------------------------------------------------------------------------
+Pylance (ms-python.vscode-pylance)
 
-## 3. Frontend (React + Vite)
+SQLTools (para visualizar o banco, opcional)
 
-### Instalar dependências
+Prettier (para formatar o código do frontend, opcional)
 
-No terminal, na pasta `frontend`:
+// AGORA IREMOS PARA OS TESTES 
 
-``` bash
-# instalar pacotes básicos
-npm install
+PASSO 1 — Ativar ambiente virtual
 
-# garantir pacotes necessários
-npm install react@18 react-dom@18 react-router-dom@6
-npm install -D vite @vitejs/plugin-react
-npm install axios
-```
+// No VSCode, abra o terminal (atalho: Ctrl + aspas) e digite:
 
-### Arquivo `.env`
+   python -m venv venv
+.\venv\Scripts\activate
 
-Na raiz de `frontend/`, crie `.env`:
+
+
+// Agora no começo da linha do terminal deve aparecer (venv) → isso significa que o ambiente está ativo.
+
+PASSO 2 — Instalar bibliotecas do backend
+
+// Com o ambiente ativo, digite:
+
+    pip install fastapi uvicorn sqlalchemy psycopg2-binary passlib[bcrypt] python-jose
+
+PASSO 3 — Criar o banco no PostgreSQL
+
+// Abra o pgAdmin (vem junto com o PostgreSQL) ou use o terminal e rode:
+
+    CREATE DATABASE automacao_db;
+
+PASSO 4 — Rodar o backend
+
+// Ainda no terminal:
+
+    uvicorn backend.main:app --reload
+
+// Se deu certo, deve aparecer no final:
+
+// Application startup complete.
+
+
+    Agora abra o navegador e vá até http://127.0.0.1:8000/docs.
+
+// Você verá a documentação automática da API.
+
+4. Preparando o Frontend (React + Vite)
+
+PASSO 1 — Entrar na pasta
+
+// No terminal do VSCode:
+
+    cd frontend
+
+PASSO 2 — Instalar dependências
+
+// Digite:
+    npm install
+    npm install react@18 react-dom@18 react-router-dom@6
+    npm install -D vite @vitejs/plugin-react
+    npm install axios
+
+PASSO 3 — Criar o arquivo .env (ELE JÁ DEVE EXISTIR, CASO NÃO, CRIE)
+
+// Dentro da pasta frontend, crie um arquivo chamado .env com este conteúdo:
 
     VITE_API_BASE=http://127.0.0.1:8000
 
-### Rodar frontend
 
-``` bash
-npm run dev
-```
+// Isso serve para o frontend saber onde está o backend.
 
-Acesse: <http://localhost:5173>.
+PASSO 4 — Rodar o frontend
 
-------------------------------------------------------------------------
+// No terminal:
 
-## 4. Testes
+    npm run dev
 
-### Back-end (Swagger)
 
-1.  `POST /users/` → criar usuário `diretor`.
-2.  `POST /auth/token` → login → copiar token.
-3.  **Authorize** → colar `Bearer <token>`.
-4.  `GET /me` → deve retornar usuário.
-5.  `GET /admin-only` → deve funcionar apenas para `diretor`.
+// Se deu certo, vai aparecer algo assim:
 
-### Front-end (React)
+Local:   http://localhost:5173/
 
-1.  Abrir <http://localhost:5173>.
-2.  Logar com usuário criado no backend.
-3.  Se sucesso → redireciona para `/home`.
-4.  Testar cenários:
-    -   Senha errada → deve mostrar erro.
-    -   Usuário correto → deve ir para Home.
 
-------------------------------------------------------------------------
+// Abra esse endereço no navegador → vai carregar a tela de Login.
 
-## 5. Checklist de Instalação
+5. Testando o Sistema
 
-✅ Python 3.11+\
-✅ PostgreSQL (com banco criado)\
-✅ Node.js 18+ (com npm)\
-✅ VSCode + extensões (Python, Pylance, SQLTools, Prettier)\
-✅ Pacotes do backend (`fastapi`, `uvicorn`, etc.)\
-✅ Pacotes do frontend (`react`, `vite`, `axios`, etc.)
+PARTE 1 — Testando pelo Swagger (backend)
 
-------------------------------------------------------------------------
+Abra http://127.0.0.1:8000/docs
+.
+
+> Crie um usuário diretor (POST /users/).
+
+> Faça login (POST /auth/token) com esse usuário.
+
+Deve retornar um access_token.
+
+> Clique em Authorize no topo direito e cole Bearer <token>.
+
+Agora:
+
+> GET /me → retorna dados do usuário.
+
+> GET /admin-only → só funciona para diretor.
+
+PARTE 2 — Testando pelo Frontend
+
+> Abra http://localhost:5173.
+
+> Digite o mesmo usuário e senha criados no backend.
+
+> Se login correto → redireciona para Home.
+
+> Se senha errada → mostra mensagem de erro.
+
+> O token JWT fica salvo no navegador (pode ver em DevTools → Application → Local Storage).
+
+6. Checklist Final
+
+Antes de rodar, confira se você tem:
+
+✅ Python instalado e funcionando
+
+✅ PostgreSQL instalado e banco criado (automacao_db)
+
+✅ Node.js instalado (testar node -v no terminal)
+
+✅ Pacotes instalados no backend
+
+✅ Pacotes instalados no frontend
+
+✅ .env criado no frontend
+
+Se tudo estiver OK, o sistema roda sem erro 🚀
