@@ -1,12 +1,10 @@
 # backend/main.py
 # Ponto de entrada da API + rotas de usuários e autenticação (JWT)
-
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
-
 from . import models, schemas, crud, database
 # Importamos utilidades de auth (implementadas em backend/auth.py)
 from .auth import (
@@ -18,14 +16,13 @@ from .auth import (
 
 # ---------------------------------------------------------
 # 1) Aplicação e CORS
+
 # ---------------------------------------------------------
 app = FastAPI(title="API - Automação ESP SEEDF")
-
 origins = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
 ]
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -36,6 +33,7 @@ app.add_middleware(
 
 # ---------------------------------------------------------
 # 2) Banco e dependências
+
 # ---------------------------------------------------------
 models.Base.metadata.create_all(bind=database.engine)
 
@@ -48,7 +46,9 @@ def get_db():
 
 # ---------------------------------------------------------
 # 3) AUTENTICAÇÃO (JWT)
+
 # ---------------------------------------------------------
+
 @app.post("/auth/token", response_model=schemas.Token, tags=["auth"])
 def login_for_access_token(
     form_data: OAuth2PasswordRequestForm = Depends(),
@@ -80,33 +80,27 @@ def read_me(current_user: models.User = Depends(get_current_user)):
     }
 
 @app.get("/admin-only", tags=["auth"])
-def admin_only(_: models.User = Depends(role_required(["diretor"]))):
+def admin_only(_: models.User = Depends(role_required("diretor"))):
     return {"ok": True, "message": "Bem-vindo, Diretor!"}
 
 # ---------------------------------------------------------
 # 4) USUÁRIOS
+
 # ---------------------------------------------------------
-from passlib.hash import bcrypt
 
 @app.post(
     "/users/",
     response_model=schemas.UserResponse,
     tags=["users"],
-    dependencies=[Depends(role_required(["diretor"]))],  # apenas diretor cria
+    dependencies=[Depends(role_required("diretor"))],  # apenas diretor cria
 )
+
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     # Verifica duplicidade
     if crud.get_user_by_username(db, username=user.username):
         raise HTTPException(status_code=400, detail="Usuário já existe")
-
     try:
-        # Hash da senha antes de salvar
-        user_to_create = schemas.UserCreate(
-            username=user.username,
-            password=bcrypt.hash(user.password),
-            role=user.role,
-        )
-        return crud.create_user(db=db, user=user_to_create)
+        return crud.create_user(db=db, user=user)
     except IntegrityError:
         db.rollback()
         raise HTTPException(status_code=400, detail="Usuário já existe")
@@ -115,8 +109,9 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     "/users/",
     response_model=list[schemas.UserListItem],
     tags=["users"],
-    dependencies=[Depends(role_required(["diretor", "gerente"]))],  # diretor OU gerente
+    dependencies=[Depends(role_required("diretor", "gerente"))],  # diretor OU gerente
 )
+
 def list_users(db: Session = Depends(get_db)):
     return crud.list_users(db)
 
@@ -124,8 +119,9 @@ def list_users(db: Session = Depends(get_db)):
     "/users/{user_id}/role",
     response_model=schemas.UserListItem,
     tags=["users"],
-    dependencies=[Depends(role_required(["diretor"]))],  # apenas diretor
+    dependencies=[Depends(role_required("diretor"))],  # apenas diretor
 )
+
 def change_role(user_id: int, payload: schemas.UserRoleUpdate, db: Session = Depends(get_db)):
     if payload.role not in ("diretor", "gerente", "arquiteto"):
         raise HTTPException(status_code=400, detail="Role inválido")
@@ -139,6 +135,7 @@ def change_role(user_id: int, payload: schemas.UserRoleUpdate, db: Session = Dep
     response_model=schemas.UserListItem,
     tags=["users"],
 )
+
 def change_password(
     user_id: int,
     payload: schemas.UserPasswordUpdate,
@@ -148,7 +145,6 @@ def change_password(
     # regra: diretor pode tudo; outros só trocam a própria senha
     if current_user.role != "diretor" and current_user.id != user_id:
         raise HTTPException(status_code=403, detail="Sem permissão")
-
     updated = crud.update_user_password(db, user_id, payload.new_password)
     if not updated:
         raise HTTPException(status_code=404, detail="Usuário não encontrado")
@@ -156,7 +152,9 @@ def change_password(
 
 # ---------------------------------------------------------
 # 5) Healthcheck
+
 # ---------------------------------------------------------
+
 @app.get("/health", tags=["health"])
 def healthcheck():
     return {"ok": True}

@@ -20,7 +20,7 @@ export default function SplashScreen() {
           display:'grid',placeItems:'center',color:'#0d4a74',fontWeight:700
         }}>LOGO</div>
         <h1 style={{lineHeight:1.3}}>
-          SISTEMA DE AUTOMAÇÃO<br/>DE ESP – SEEDF
+          SISTEMA DE AUTOMAÇÃO<br/>DE ESP Nº SEEDF
         </h1>
         <div style={{
           margin:'24px auto', width:40, height:40,

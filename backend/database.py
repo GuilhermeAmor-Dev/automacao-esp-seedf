@@ -3,8 +3,10 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
+from .settings import settings
+
 # URL de conexão com o PostgreSQL
-DATABASE_URL = "postgresql://postgres:Everymorn1!@localhost:5432/automacao_esp"
+DATABASE_URL = settings.database_url
 
 # Cria a conexão com o banco
 engine = create_engine(DATABASE_URL)

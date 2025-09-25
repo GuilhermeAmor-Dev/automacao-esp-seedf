@@ -40,7 +40,7 @@ export default function Login() {
           <label>
             <div style={{fontSize:12,marginBottom:4}}>Usuário</div>
             <div style={{display:'flex',gap:8,border:'1px solid #ddd',borderRadius:10,padding:'8px 12px'}}>
-              <span>👤</span>
+              <span aria-hidden="true" style={{fontSize:16}}>👤</span>
               <input
                 style={{border:'none',outline:'none',flex:1}}
                 value={username}
@@ -55,7 +55,7 @@ export default function Login() {
           <label>
             <div style={{fontSize:12,marginBottom:4}}>Senha</div>
             <div style={{display:'flex',gap:8,border:'1px solid #ddd',borderRadius:10,padding:'8px 12px'}}>
-              <span>🔒</span>
+              <span aria-hidden="true" style={{fontSize:16}}>🔒</span>
               <input
                 type="password"
                 style={{border:'none',outline:'none',flex:1}}

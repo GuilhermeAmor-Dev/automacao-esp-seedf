@@ -1,20 +1,20 @@
 # backend/auth.py
 from datetime import datetime, timedelta
-import os
 from typing import Optional
 
-from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordRequestForm, HTTPBearer, HTTPAuthorizationCredentials
+from fastapi import Depends, HTTPException, status
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from jose import jwt, JWTError
 from sqlalchemy.orm import Session
 from passlib.hash import bcrypt
 
-from . import database, models, schemas  # suas definições existentes
+from . import database, models  # suas definições existentes
+from .settings import settings
 
 # --- Configs de segurança ---
-SECRET_KEY = os.getenv("SECRET_KEY", "mude-esta-chave-bem-grande-e-secreta")
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60
+SECRET_KEY = settings.secret_key
+ALGORITHM = settings.algorithm
+ACCESS_TOKEN_EXPIRE_MINUTES = settings.access_token_expire_minutes
 
 # --- Dependências comuns ---
 def get_db():
@@ -74,26 +74,3 @@ def role_required(*roles: str):
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Sem permissão")
         return user
     return decorator
-
-# ==========================================================
-#                ROTAS DO MÓDULO AUTH
-# ==========================================================
-router = APIRouter()  # <- **exportamos isto**
-
-@router.post("/token")
-def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
-    user = authenticate_user(db, form_data.username, form_data.password)
-    if not user:
-        # mesmo retorno do que você já via no front
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Usuário ou senha inválidos")
-    access_token = create_access_token({"sub": user.username})
-    return {"access_token": access_token, "token_type": "bearer"}
-
-@router.get("/me", response_model=schemas.UserResponse)
-def me(current: models.User = Depends(get_current_user)):
-    # schemas.UserResponse tem from_attributes=True (Pydantic v2)
-    return current
-
-@router.get("/admin-only")
-def admin_only(_: models.User = Depends(role_required("diretor"))):
-    return {"ok": True, "message": "Bem-vindo, Diretor!"}
