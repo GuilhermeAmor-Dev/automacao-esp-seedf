@@ -68,7 +68,7 @@ PASSO 3 — Criar o banco no PostgreSQL
 
     CREATE DATABASE automacao_db;
 
-PASSO 4 — Rodar o backend
+>> PASSO 4 — Rodar o backend
 
 // Ainda no terminal:
 
@@ -91,7 +91,7 @@ PASSO 1 — Entrar na pasta
 
     cd frontend
 
-PASSO 2 — Instalar dependências
+PASSO 2 — Instalar dependências (Somente se o usuário não possuir)
 
 // Digite:
     npm install
