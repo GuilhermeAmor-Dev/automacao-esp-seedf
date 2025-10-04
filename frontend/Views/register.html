@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Conta - SEEDF</title>
+    <link rel="stylesheet" href="../src/assets/css/style.css">
+</head>
+<body>
+    <div class="auth-container">
+        <header class="auth-header"></header>
+        <main class="auth-main">
+            <div class="auth-form-wrapper">
+                <img src="../assets/img/logo-seedf.png" alt="Logo GDF" class="logo">
+                <form id="registerForm">
+                    <div class="register-layout">
+                        <div class="register-form-fields">
+                            <div class="form-group-inline">
+                                <div class="form-group">
+                                    <label for="firstName">Nome</label>
+                                    <input type="text" id="firstName" class="form-control" placeholder="Nome">
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName">Sobrenome</label>
+                                    <input type="text" id="lastName" class="form-control" placeholder="Sobrenome">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="role">Selecione o cargo</label>
+                                <select id="role" class="form-control">
+                                    <option value="" disabled selected>Selecione o cargo</option>
+                                    <option value="professor">Professor(a)</option>
+                                    <option value="coordenador">Coordenador(a)</option>
+                                    <option value="diretor">Diretor(a)</option>
+                                    <option value="administrativo">Administrativo</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="matricula">Número da Matrícula</label>
+                                <input type="text" id="matricula" class="form-control" placeholder="Número da Matrícula">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email institucional</label>
+                                <input type="email" id="email" class="form-control" placeholder="Email institucional">
+                            </div>
+                            <div class="form-group-inline">
+                                <div class="form-group">
+                                    <label for="password">Senha</label>
+                                    <input type="password" id="password" class="form-control" placeholder="Senha">
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirmPassword">Confirmar senha</label>
+                                    <input type="password" id="confirmPassword" class="form-control" placeholder="Confirmar senha">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-image-section">
+                            <div class="profile-image-placeholder">
+                                </div>
+                            <button type="button">Editar Imagem</button>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="button" class="btn btn-primary" onclick="history.back()">Voltar</button>
+                        <button type="submit" class="btn btn-primary">Criar conta</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script src="../src/assets/js/auth.js"></script>
+</body>
+</html>
