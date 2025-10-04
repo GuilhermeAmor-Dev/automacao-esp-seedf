@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - SEEDF</title>
+    <link rel="stylesheet" href="../src/assets/css/style.css">
+</head>
+<body>
+    <div class="auth-container">
+        <header class="auth-header"></header>
+        <main class="auth-main">
+            <div class="auth-form-wrapper">
+                <img src="../assets/img/logo-seedf.png" alt="Logo SEEDF" class="logo">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="email">Email ou Nº da matrícula</label>
+                        <input type="text" id="email" class="form-control" placeholder="Email institucional ou Nº da matrícula">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Senha</label>
+                        <input type="password" id="password" class="form-control" placeholder="Senha">
+                        <a href="forgot-password.html" class="form-link">Esqueceu sua senha? Clique aqui.</a>
+                    </div>
+                    <div class="button-group">
+                        <button type="button" class="btn btn-primary" onclick="history.back()">Voltar</button>
+                        <button type="submit" class="btn btn-primary">Continuar</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script src="../src/assets/js/auth.js"></script>
+</body>
+</html>
