@@ -9,3 +9,4 @@ Aqui estão listadas todas as atas do projeto, em ordem cronológica:
 - [Ata – 14/09/2025](atas/ata-2025-09-14.md)
 - [Ata – 21/09/2025](atas/ata-2025-09-21.md)
 - [Ata – 29/09/2025](atas/ata-2025-09-29.md)
+- [Ata – 05/10/2025](atas/ata-2025-10-05.md)
